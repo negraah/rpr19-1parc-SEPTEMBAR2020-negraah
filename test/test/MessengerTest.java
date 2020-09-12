@@ -300,7 +300,7 @@ class MessengerTest {
         List<Poruka> filtrirane = messenger.filtrirajPoruke(poruka -> poruka.getTekst().contains("?"));
 
         assertEquals(4, filtrirane.size());
-    }*/
+    }
 
     @Test
     public void dajStarijeOdTest1(){
@@ -323,7 +323,7 @@ class MessengerTest {
 
         assertTrue(filtrirane.isEmpty());
     }
-
+*/
     @Test
     public void toStringTest1(){
         messenger.posaljiPoruke(List.of(poruke.get(0), poruke.get(1)));

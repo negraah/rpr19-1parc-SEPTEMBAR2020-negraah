@@ -55,7 +55,9 @@ public class Messenger {
     }
 
     public void procitajPoruku(Poruka poruka) throws NeispravnaAkcija {
-
+        if(poruka==null){
+            throw new IllegalArgumentException("ne");
+        }
         boolean imaPoruke = false;
 
         for (Poruka por1 : poruke) {
