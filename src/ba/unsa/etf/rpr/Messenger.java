@@ -55,6 +55,7 @@ public class Messenger {
     }
 
     public void procitajPoruku(Poruka poruka) throws NeispravnaAkcija {
+
         boolean imaPoruke = false;
 
         for (Poruka por1 : poruke) {
@@ -64,20 +65,27 @@ public class Messenger {
             }
         }
         if(!imaPoruke){
-            throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja nije nikada poslana!");
+            throw new NeispravnaAkcija("Nije moguće pročitati poruku koja nije nikada poslana!");
         }
         if(poruka.getStatusPoruke().equals(StatusPoruke.NEPROCITANA)){
             poruka.setStatusPoruke(StatusPoruke.PROCITANA);
         }
     }
 
-    public void oznaciKaoNeprocitano(List<Poruka> lista) {
+    public void oznaciKaoNeprocitano(List<Poruka> lista) throws NeispravnaAkcija {
         boolean imaPoruke = false;
 
         for (Poruka poruka1 : lista) {
-
+            if(poruka1.equals(lista)){
+                imaPoruke = true;
+            }else {
+                imaPoruke = false;
+                break;
+            }
         }
-
+        if(imaPoruke==false){
+         throw new NeispravnaAkcija("Neke od poruka koje pokušavate označiti kao nepročitane nisu poslane!");
+    }
 
         for (Poruka por1 : lista) {
             if(por1.getStatusPoruke().equals(StatusPoruke.PROCITANA)){
