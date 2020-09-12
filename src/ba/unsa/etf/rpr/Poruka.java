@@ -55,7 +55,9 @@ public class Poruka {
         return datumSlanja;
     }
 
-    public void setDatumSlanja(LocalDateTime datumSlanja) {
+    public void setDatumSlanja(LocalDateTime datumSlanja) throws NeispravanFormatPoruke {
+        if(datumSlanja==null){
+            throw new NeispravanFormatPoruke("Datum slanja ne smije biti null!");}
         this.datumSlanja = datumSlanja;
     }
 
@@ -77,12 +79,12 @@ public class Poruka {
     }
 
     public void setStatusPoruke(StatusPoruke statusPoruke) {
-        this.statusPoruke = statusPoruke.NEPROCITANA;
+        this.statusPoruke = statusPoruke;
     }
 
     @Override
     public String toString() {
-        return "[od: " +getPosiljalac() +getPosiljalac().getNadimak();
+        return "[od: " +getPosiljalac() +" za: "+ getPrimalac() +" tekst: "+ getTekst() +"]";
     }
 
 

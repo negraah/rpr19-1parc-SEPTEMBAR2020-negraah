@@ -68,7 +68,7 @@ class PorukaTest {
         );
     }
 
-   /* @Test
+    @Test
     public void setteriTest1() throws NeispravanFormatPoruke {
         Poruka poruka = new Poruka(korisnik1, korisnik2, datum, "Da li si slobodan za kafu danas?");
 
@@ -132,5 +132,5 @@ class PorukaTest {
                 () -> assertEquals(porukaString, poruka.toString()),
                 () -> assertEquals(poruka2String, poruka2.toString())
         );
-    }*/
+    }
 }
