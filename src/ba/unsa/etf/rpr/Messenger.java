@@ -67,14 +67,22 @@ public class Messenger {
             throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja nije nikada poslana!");
         }
         if(poruka.getStatusPoruke().equals(StatusPoruke.NEPROCITANA)){
-            poruka.getStatusPoruke().equals(StatusPoruke.PROCITANA);
+            poruka.setStatusPoruke(StatusPoruke.PROCITANA);
         }
     }
 
     public void oznaciKaoNeprocitano(List<Poruka> lista) {
         boolean imaPoruke = false;
-        for (Poruka por1 : lista) {
 
+        for (Poruka poruka1 : lista) {
+
+        }
+
+
+        for (Poruka por1 : lista) {
+            if(por1.getStatusPoruke().equals(StatusPoruke.PROCITANA)){
+            por1.setStatusPoruke(StatusPoruke.NEPROCITANA);
+            }
         }
 
     }
