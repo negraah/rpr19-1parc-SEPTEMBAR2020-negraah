@@ -85,7 +85,7 @@ class MessengerTest {
 
         assertEquals("Nije moguće poništiti slanje poruke koja nije nikada poslana!", exception.getMessage());
     }
-/*
+
     @Test
     public void ponistiSlanjeTest2() throws NeispravanFormatPoruke, NeispravnaAkcija {
         messenger.posaljiPoruke(poruke);
@@ -283,7 +283,7 @@ class MessengerTest {
                 () -> assertTrue(porukeZaKorisnika4.contains(poruke.get(4)))
         );
     }
-
+/*
     @Test
     public void filtrirajPorukeTest1(){
         messenger.posaljiPoruke(poruke);
@@ -300,7 +300,7 @@ class MessengerTest {
         List<Poruka> filtrirane = messenger.filtrirajPoruke(poruka -> poruka.getTekst().contains("?"));
 
         assertEquals(4, filtrirane.size());
-    }
+    }*/
 
     @Test
     public void dajStarijeOdTest1(){
@@ -344,5 +344,5 @@ class MessengerTest {
                 () -> assertEquals(rezultat2, messenger2.toString())
         );
     }
-*/
+
 }

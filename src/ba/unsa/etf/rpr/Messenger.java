@@ -54,7 +54,50 @@ public class Messenger {
 
     }
 
-    public void procitajPoruku(Poruka poruka) {
+    public void procitajPoruku(Poruka poruka) throws NeispravnaAkcija {
+        boolean imaPoruke = false;
+
+        for (Poruka por1 : poruke) {
+            if(por1.equals(poruka)){
+                imaPoruke = true;
+                break;
+            }
+        }
+        if(!imaPoruke){
+            throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja nije nikada poslana!");
+        }
+        if(poruka.getStatusPoruke().equals(StatusPoruke.NEPROCITANA)){
+            poruka.getStatusPoruke().equals(StatusPoruke.PROCITANA);
+        }
+    }
+
+    public void oznaciKaoNeprocitano(List<Poruka> lista) {
+        boolean imaPoruke = false;
+        for (Poruka por1 : lista) {
+
+        }
 
     }
+
+    public Map<Korisnik, List<Poruka>> dajNeprocitanePoruke() {
+        return null;
+    }
+
+    public List<Poruka> dajPristiglePorukeZaKorisnika(Korisnik korisnik1) {
+        return null;
+    }
+
+    public List<Poruka> dajPorukeZaKorisnika(Korisnik korisnik3, StatusPoruke procitana) {
+        return null;
+    }
+
+    public List<Poruka> dajStarijeOd(Korisnik korisnik1, LocalDateTime datum) {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
 }
