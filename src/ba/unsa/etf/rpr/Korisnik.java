@@ -6,14 +6,12 @@ public class Korisnik {
     private String nadimak;
 
     public Korisnik(String ime, String prezime, String nadimak) {
-        if(ime=="" || prezime=="" || nadimak=="" ){
-            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
-        }
-
-        if(ime==null|| prezime==null|| nadimak==null){
+        if(ime==null || prezime==null || nadimak==null){
             throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti null!");
         }
-
+        if(ime=="" || prezime=="" || nadimak==""){
+            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
+        }
         if(nadimak.length()<5){
             throw new IllegalArgumentException("Nadimak mora imati 5 ili više karaktera!");
         }
@@ -27,11 +25,11 @@ public class Korisnik {
     }
 
     public void setIme(String ime) {
-        if(ime==""){
-            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
-        }
         if(ime==null){
             throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti null!");
+        }
+        if(ime==""){
+            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
         }
         this.ime = ime;
     }
@@ -41,11 +39,11 @@ public class Korisnik {
     }
 
     public void setPrezime(String prezime) {
-        if(prezime==""){
-            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
-        }
         if(prezime==null){
             throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti null!");
+        }
+        if(prezime==""){
+            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
         }
         this.prezime = prezime;
     }
@@ -55,13 +53,12 @@ public class Korisnik {
     }
 
     public void setNadimak(String nadimak) {
-        if(nadimak==""){
-            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
-        }
         if(nadimak==null){
             throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti null!");
         }
-
+        if(nadimak==""){
+            throw new IllegalArgumentException("Ime, prezime i nadimak ne smiju biti prazni!");
+        }
         if(nadimak.length()<5){
             throw new IllegalArgumentException("Nadimak mora imati 5 ili više karaktera!");
         }
@@ -70,6 +67,6 @@ public class Korisnik {
 
     @Override
     public String toString() {
-        return ime +" "+ prezime + " (" + nadimak + ")";
+        return ime +" "+ prezime +" "+  "(" + nadimak + ")";
     }
 }

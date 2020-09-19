@@ -2,120 +2,146 @@ package ba.unsa.etf.rpr;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Messenger {
-    private ArrayList<Poruka> poruke = new ArrayList<>();
+    private ArrayList<Poruka> poruke;
 
     public Messenger() {
-        poruke = new ArrayList<>();
-    }
-//PROVEJRI NEGRAAAAAAAAAAAAAAAAAAAAAA
-    public ArrayList<Poruka> dajSvePoruke() {
-        return poruke;
+        this.poruke = new ArrayList<>();
     }
 
-    public void posaljiPoruku(Korisnik posiljalac, Korisnik primalac, String tekstPoruke) throws NeispravanFormatPoruke {
-        Poruka poruka = new Poruka(posiljalac,primalac, LocalDateTime.now(),tekstPoruke);
-        poruke.add(poruka);
+    public ArrayList<Poruka> dajSvePoruke() {
+        return poruke;
     }
 
     public void posaljiPoruku(Poruka poruka) {
         poruke.add(poruka);
     }
 
-    public void posaljiPoruke(List<Poruka> listaPoruka) {
-        for (Poruka por1 : listaPoruka) {
-            poruke.add(por1);
-        }
+    public void posaljiPoruku(Korisnik posiljalac, Korisnik primalac, String tekst) throws NeispravanFormatPoruke {
+        Poruka poruka = new Poruka(posiljalac, primalac, LocalDateTime.now(), tekst);
+        poruke.add(poruka);
+    }
 
+
+    public void posaljiPoruke(List<Poruka> poruke1) {
+        for (Poruka por : poruke1) {
+            poruke.add(por);
+        }
     }
 
     public void ponistiSlanje(Poruka poruka) throws NeispravnaAkcija {
-        boolean imaPoruke = false;
-
-        for (Poruka por1 : poruke) {
-            if(por1.equals(poruka)){
-                imaPoruke = true;
+        boolean poslana = false;
+        for (Poruka por : poruke) {
+            if (poruka.equals(por)) {
+                poslana = true;
                 break;
             }
         }
-        if(!imaPoruke){
-           throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja nije nikada poslana!");
+        if (!poslana) {
+            throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja nije nikada poslana!");
         }
-        if(poruka.getStatusPoruke().equals(StatusPoruke.PROCITANA)){
+        if (poruka.getStatusPoruke() == StatusPoruke.PROCITANA) {
             throw new NeispravnaAkcija("Nije moguće poništiti slanje poruke koja je već pročitana!");
         }
-
-        if(poruka.getStatusPoruke().equals(StatusPoruke.NEPROCITANA)){
-            poruke.remove(poruka);
-        }
-
+        poruke.remove(poruka);
     }
 
     public void procitajPoruku(Poruka poruka) throws NeispravnaAkcija {
-        if(poruka==null){
-            throw new IllegalArgumentException("ne");
-        }
-        boolean imaPoruke = false;
-
-        for (Poruka por1 : poruke) {
-            if(por1.equals(poruka)){
-                imaPoruke = true;
+        boolean poslana = false;
+        for (Poruka por : poruke) {
+            if (poruka.equals(por)) {
+                poslana = true;
                 break;
             }
         }
-        if(!imaPoruke){
+        if (!poslana) {
             throw new NeispravnaAkcija("Nije moguće pročitati poruku koja nije nikada poslana!");
         }
-        if(poruka.getStatusPoruke().equals(StatusPoruke.NEPROCITANA)){
+        if (poruka.getStatusPoruke() == StatusPoruke.NEPROCITANA) {
             poruka.setStatusPoruke(StatusPoruke.PROCITANA);
         }
     }
 
-    public void oznaciKaoNeprocitano(List<Poruka> lista) throws NeispravnaAkcija {
-        boolean imaPoruke = false;
 
-        for (Poruka poruka1 : lista) {
-            if(poruka1.equals(lista)){
-                imaPoruke = true;
-            }else {
-                imaPoruke = false;
+    public void oznaciKaoNeprocitano(List<Poruka> porukeee) throws NeispravnaAkcija {
+        boolean poslana = false;
+        for (Poruka por : porukeee) {
+            for (Poruka por2 : poruke) {
+                if (por.equals(por2)) {
+                    poslana = true;
+                    break;
+                } else {
+                    poslana = false;
+                }
+            }
+            if (poslana == false) {
                 break;
             }
         }
-        if(imaPoruke==false){
-         throw new NeispravnaAkcija("Neke od poruka koje pokušavate označiti kao nepročitane nisu poslane!");
-    }
-
-        for (Poruka por1 : lista) {
-            if(por1.getStatusPoruke().equals(StatusPoruke.PROCITANA)){
-            por1.setStatusPoruke(StatusPoruke.NEPROCITANA);
-            }
+        if (poslana == false) {
+            throw new NeispravnaAkcija("Neke od poruka koje pokušavate označiti kao nepročitane nisu poslane!");
         }
-
+        for (Poruka porrrr : porukeee) {
+            porrrr.setStatusPoruke(StatusPoruke.NEPROCITANA);
+        }
     }
 
     public Map<Korisnik, List<Poruka>> dajNeprocitanePoruke() {
-        return null;
+
+        Map<Korisnik, List<Poruka>> mapa = new HashMap<>();
+
+        for (Poruka por : poruke) {
+
+            if (!mapa.containsKey(por.getPrimalac())) {
+                mapa.put(por.getPrimalac(), new ArrayList<>());
+            }
+            if (por.getStatusPoruke() == StatusPoruke.NEPROCITANA) {
+                mapa.get(por.getPrimalac()).add(por);
+            }
+        }
+        return mapa;
     }
+
 
     public List<Poruka> dajPristiglePorukeZaKorisnika(Korisnik korisnik1) {
-        return null;
+        List<Poruka> rez = new ArrayList<>();
+
+        for (Poruka por : poruke) {
+            if(por.getPrimalac().equals(korisnik1)){
+                rez.add(por);
+            }
+        }
+return rez;
     }
 
-    public List<Poruka> dajPorukeZaKorisnika(Korisnik korisnik3, StatusPoruke procitana) {
-        return null;
+    public List<Poruka> dajPorukeZaKorisnika(Korisnik korisnik, StatusPoruke status) {
+      return poruke.stream().filter(x-> x.getPrimalac().equals(korisnik)
+              && x.getStatusPoruke().equals(status)).collect(Collectors.toList());
+    }
+
+    public List<Poruka> filtrirajPoruke(Function<Poruka, Boolean> f){
+        return poruke.stream().filter(x->f.apply(x)).collect(Collectors.toList());
     }
 
     public List<Poruka> dajStarijeOd(Korisnik korisnik1, LocalDateTime datum) {
-        return null;
+        return filtrirajPoruke(x->x.getPosiljalac().equals(korisnik1) && !x.getDatumSlanja().isAfter(datum));
     }
 
     @Override
     public String toString() {
-        return "";
-    }
 
+        String s = "";
+        for (Poruka poruka : poruke) {
+            s += poruka + "\n";
+        }
+        return s.trim();
+
+    }
 }
+

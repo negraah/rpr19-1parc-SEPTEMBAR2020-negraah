@@ -283,7 +283,7 @@ class MessengerTest {
                 () -> assertTrue(porukeZaKorisnika4.contains(poruke.get(4)))
         );
     }
-/*
+
     @Test
     public void filtrirajPorukeTest1(){
         messenger.posaljiPoruke(poruke);
@@ -323,7 +323,7 @@ class MessengerTest {
 
         assertTrue(filtrirane.isEmpty());
     }
-*/
+
     @Test
     public void toStringTest1(){
         messenger.posaljiPoruke(List.of(poruke.get(0), poruke.get(1)));
